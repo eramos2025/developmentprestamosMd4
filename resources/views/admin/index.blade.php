@@ -12,7 +12,8 @@
     <!--<p>Welcome to this beautiful admin panel.</p>-->
 
 <div class="row" style="padding-left: 5px;">
-<div class="col-lg-3 col-6">
+
+        <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
@@ -24,7 +25,22 @@
               </div>
               <a href="{{ url('/admin/usuarios') }}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-primary">
+              <div class="inner">
+                <h3>{{$total_clientes}}</h3>
+                <p>Clientes Registrados</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="{{ url('/admin/clientes') }}" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+ 
 </div>
 
 @stop
