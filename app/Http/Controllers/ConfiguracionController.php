@@ -87,7 +87,7 @@ class ConfiguracionController extends Controller
     public function edit($id)
     {
         //
-          $configuracion = Configuracion::find($id);
+        $configuracion = Configuracion::find($id);
         return view('admin.configuraciones.edit', compact('configuracion'));
     }
 

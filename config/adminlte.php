@@ -370,6 +370,16 @@ return [
                 ],
             ],    
         ],
+        [
+            'text' => 'Clientes',
+            'icon' => 'fas fa-fw fa-id-card',
+            'submenu' => [
+                [
+                    'text' => 'Listado de clientes',
+                    'url' => 'admin/clientes',
+                ],
+            ],    
+        ],
     ],
 
     /*

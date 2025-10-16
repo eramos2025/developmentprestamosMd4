@@ -9,6 +9,10 @@ Route::get('/', function () {
 });
 */
 
+Route::get('/prueba', function () {
+    return view('prueba');
+});
+
 Route::get('/',[App\Http\Controllers\AdminController::class, 'index'])->name('admin.index')->middleware('auth');
 
 Auth::routes();
@@ -83,5 +87,28 @@ Route::put('/admin/usuarios/{id}',
 // Eliminar
 Route::delete('/admin/usuarios/{id}', 
            [App\Http\Controllers\UsuarioController::class, 'destroy'])->name('admin.usuarios.destroy')->middleware('auth');
+
+//=========================================================================================
+// RUTAS MODULO :: Clientes ::
+Route::get('/admin/clientes', 
+           [App\Http\Controllers\ClienteController::class, 'index'])->name('admin.clientes.index')->middleware('auth');
+// CRUD Configuraciones
+// Crear
+Route::get('/admin/clientes/create', 
+           [App\Http\Controllers\ClienteController::class, 'create'])->name('admin.clientes.create')->middleware('auth');
+Route::post('/admin/clientes/create', 
+           [App\Http\Controllers\ClienteController::class, 'store'])->name('admin.clientes.store')->middleware('auth');
+// Leer
+Route::get('/admin/clientes/{id}', 
+           [App\Http\Controllers\ClienteController::class, 'show'])->name('admin.clientes.show')->middleware('auth');
+// Actualiza
+Route::get('/admin/clientes/{id}/edit', 
+           [App\Http\Controllers\ClienteController::class, 'edit'])->name('admin.clientes.edit')->middleware('auth');
+Route::put('/admin/clientes/{id}', 
+           [App\Http\Controllers\ClienteController::class, 'update'])->name('admin.clientes.update')->middleware('auth');
+// Eliminar
+Route::delete('/admin/clientes/{id}', 
+           [App\Http\Controllers\ClienteController::class, 'destroy'])->name('admin.clientes.destroy')->middleware('auth');
+
 
 
