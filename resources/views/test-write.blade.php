@@ -1,19 +1,20 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h4>Nuevo Cliente</h4>
+    <h4>Editar Cliente</h4>
 @stop
 
 @section('content')
 <div class="row">
-    <div class="col-md-10 offset-md-1">
-        <div class="card card-outline card-primary">
+    <div class="col-md-10 offset-md-1"> {{-- Centrado en la página --}}
+        <div class="card card-outline card-success">
             <div class="card-header">
-                <h3 class="card-title">Ingrese nuevo cliente</h3>
+                <h3 class="card-title">Modificar Cliente</h3>
             </div>
 
-            <form action="{{ url('admin/clientes/create') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('admin/clientes', $cliente->id) }}" method="POST"  enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
 
                 <div class="card-body">
                     {{-- ====== NAV TABS ====== --}}
@@ -45,7 +46,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                             </div>
-                                            <input type="text" id="nro_documento" name="nro_documento" class="form-control" placeholder="Ingresa Número de documento">
+                                            <input type="text" id="nro_documento" name="nro_documento" class="form-control" value="{{ $cliente->nro_documento }}"  placeholder="Ingresa Número de documento">
                                         </div>
                                         @error('nro_documento')
                                             <small class="text-danger">{{ $message }}</small>
@@ -60,7 +61,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                                             </div>
-                                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresa Nombres">
+                                            <input type="text" id="nombre" name="nombre" class="form-control" value="{{ $cliente->nombre }}"  placeholder="Ingresa Nombres">
                                         </div>
                                         @error('nombre')
                                             <small class="text-danger">{{ $message }}</small>
@@ -74,7 +75,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                                             </div>
-                                            <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingresa Apellidos">
+                                            <input type="text" id="apellido" name="apellido" class="form-control" value="{{ $cliente->apellido }}"  placeholder="Ingresa Apellidos">
                                         </div>
                                         @error('apellido')
                                             <small class="text-danger">{{ $message }}</small>
@@ -95,7 +96,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                             </div>
-                            <input type="email" id="email" name="email" class="form-control" placeholder="Introduce tu correo">                                    
+                            <input type="email" id="email" name="email" class="form-control" value="{{ $cliente->email }}"  placeholder="Introduce tu correo">                                    
                         </div> 
                         @error('email')
                             <small style="color:red"> {{ $message }} </small>
@@ -112,8 +113,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
                 </div>
-                <input type="number" id="telefono" name="telefono" class="form-control"
-                       placeholder="Ingresa Teléfono" >
+                <input type="number" id="telefono" name="telefono" class="form-control" value="{{ $cliente->telefono }}"  placeholder="Ingresa Teléfono" >
             </div>
             @error('telefono')
                 <small class="text-danger">{{ $message }}</small>
@@ -129,8 +129,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                 </div>
-                <input type="number" id="telefono_ref" name="telefono_ref" class="form-control"
-                       placeholder="Ingresa Teléfono de Referencia" >
+                <input type="number" id="telefono_ref" name="telefono_ref" class="form-control" value="{{ $cliente->telefono_ref }}"  placeholder="Ingresa Teléfono de Referencia" >
             </div>
             @error('telefono_ref')
                 <small class="text-danger">{{ $message }}</small>
@@ -149,7 +148,7 @@
                     <span class="input-group-text"><i class="fas fa-street-view"></i></span>
                 </div>
                 <!--<input type="text" id="direccion" name="direccion" class="form-control" placeholder="Ingresa tu dirección">-->
-                <textarea id="direccion" name="direccion" class="form-control" rows="2" placeholder="Ingresa tu dirección"></textarea>
+                <textarea id="direccion" name="direccion" class="form-control" rows="2" placeholder="Ingresa tu dirección" >{{ $cliente->direccion }}</textarea>
             </div>
             @error('direccion')
                 <small style="color:red"> {{ $message }} </small>
@@ -168,7 +167,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-map"></i></span>
                     </div>
-                    <input type="text" id="departamento" name="departamento" class="form-control" placeholder="Ingresa tu Departamento">
+                    <input type="text" id="departamento" name="departamento" class="form-control" value="{{ $cliente->departamento }}" placeholder="Ingresa tu Departamento">
                 </div>
                 @error('departamento')
                     <small class="text-danger">{{ $message }}</small>
@@ -184,7 +183,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-map-marked"></i></span>
                     </div>
-                    <input type="text" id="provincia" name="provincia" class="form-control" placeholder="Ingresa tu Provincia">
+                    <input type="text" id="provincia" name="provincia" class="form-control" value="{{ $cliente->provincia }}" placeholder="Ingresa tu Provincia">
                 </div>
                 @error('provincia')
                     <small class="text-danger">{{ $message }}</small>
@@ -200,7 +199,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
                     </div>
-                    <input type="text" id="distrito" name="distrito" class="form-control" placeholder="Ingresa tu Distrito">
+                    <input type="text" id="distrito" name="distrito" class="form-control" value="{{ $cliente->distrito }}" placeholder="Ingresa tu Distrito">
                 </div>
                 @error('distrito')
                     <small class="text-danger">{{ $message }}</small>
@@ -220,8 +219,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-id-badge"></i></span>
                 </div>
-                <input type="text" id="ocupacion" name="ocupacion" class="form-control"
-                       placeholder="Ingresa tu Ocupación" >
+                <input type="text" id="ocupacion" name="ocupacion" class="form-control" value="{{ $cliente->ocupacion }}" placeholder="Ingresa tu Ocupación" >
             </div>
             @error('ocupacion')
                 <small class="text-danger">{{ $message }}</small>
@@ -234,8 +232,7 @@
         <div class="form-group">
             <label for="ing_mensual">Ingreso Mensual</label><b> (*)</b>
             <div class="input-group mb-3">
-                <input type="text" id="ing_mensual" name="ing_mensual" class="form-control"
-                placeholder="Ingresa tu Ingreso Mensual" >
+                <input type="text" id="ing_mensual" name="ing_mensual" class="form-control" value="{{ $cliente->ing_mensual }}" placeholder="Ingresa tu Ingreso Mensual" >
                 <div class="input-group-append">
                     <span class="input-group-text">.00</span>
                 </div>
@@ -257,7 +254,7 @@
                                 <span class="input-group-text"><i class="fas fa-clipboard"></i></span>
                             </div>
                             <!--<input type="text" id="comentarios" name="comentarios" class="form-control" placeholder="Ingresa Comentarios">-->
-                            <textarea id="comentarios" name="comentarios"  class="form-control" rows="2" placeholder="Ingresa Comentarios" ></textarea>
+                            <textarea id="comentarios" name="comentarios"  class="form-control" rows="2" placeholder="Ingresa Comentarios" >{{ $cliente->comentarios }}</textarea>
                         </div>
                         @error('comentarios')
                             <small style="color:red"> {{ $message }} </small>
@@ -269,107 +266,57 @@
                         {{-- ===== TAB 2: ARCHIVOS RELACIONADOS ===== --}}
                         <div class="tab-pane fade" id="tab-archivos" role="tabpanel" aria-labelledby="tab-archivos-tab">
                             <div class="form-group">
-                                <label for="archivos">Archivos Relacionados</label>
-                                
-                                {{-- Botón personalizado para subir --}}
-                                <div class="text-center p-4 border rounded" 
-                                    style="background: #f8f9fa; cursor: pointer;"
-                                    onclick="document.getElementById('archivos').click()">
-                                    <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-2"></i>
-                                    <p class="mb-0">Haz clic aquí para seleccionar archivos</p>
-                                    <small class="text-muted">JPG, PNG, PDF (máx. 5MB cada uno)</small>
+                                <label for="logo">Archivos Relacionados</label>
+                                <input type="file" name="logo" id="logo" accept=".jpg, .jpeg, .png" class="form-control">
+                                @error('logo')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                                <div class="mt-3 text-center">
+                                    <output id="preview"></output>
                                 </div>
-                                
-                                <input type="file" 
-                                    class="d-none" 
-                                    id="archivos" 
-                                    name="archivos[]" 
-                                    multiple
-                                    accept=".jpg,.jpeg,.png,.pdf"
-                                    onchange="mostrarArchivosConPreview(this)">
-                                
-                                {{-- Preview de archivos --}}
-                                <div id="preview-archivos" class="row mt-3"></div>
                             </div>
                         </div>
 
                     </div> {{-- /tab-content --}}
                 </div> {{-- /card-body --}}
 
+
+
                 <div class="card-footer text-center">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" class="btn btn-success">Modificar</button>
                     <a href="{{ url('/admin/clientes') }}" class="btn btn-secondary">Cancelar</a>
                 </div>
+
             </form>
         </div>
     </div>
 </div>
+
+
+{{-- Script de vista previa --}}
+<script>
+    function mostrarVistaPrevia(event) {
+        const files = event.target.files;
+        const lista = document.getElementById('list');
+        lista.innerHTML = '';
+
+        for (const file of files) {
+            if (!file.type.match('image.*')) continue;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                lista.innerHTML = `<img src="${e.target.result}" class="img-fluid mt-2 rounded" style="max-width: 60%; border: 2px solid #ddd; padding: 5px;">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    //document.getElementById('foto').addEventListener('change', mostrarVistaPrevia);
+</script>
 @stop
 
-
 @push('css')
-<style>
-.card {
-    transition: transform 0.2s;
-}
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-</style>
 @endpush
 
 @push('js')
-<script>
-function mostrarArchivosConPreview(input) {
-    const preview = document.getElementById('preview-archivos');
-    const files = input.files;
-    
-    if (files.length === 0) {
-        preview.innerHTML = '';
-        return;
-    }
-    
-    preview.innerHTML = '';
-    
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const size = (file.size / 1024 / 1024).toFixed(2);
-        
-        const col = document.createElement('div');
-        col.className = 'col-md-2 col-sm-4 col-6 mb-3'; // Más columnas = más pequeño
-        
-        // Si es imagen, mostrar preview
-        if (file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                col.innerHTML = `
-                    <div class="card preview-card-small h-100">
-                        <img src="${e.target.result}" class="card-img-top" style="height: 100px; object-fit: cover;">
-                        <div class="card-body p-2">
-                            <p class="mb-1 small text-truncate" style="font-size: 0.75rem;" title="${file.name}">${file.name}</p>
-                            <p class="mb-0 text-muted" style="font-size: 0.7rem;">${size} MB</p>
-                        </div>
-                    </div>
-                `;
-            };
-            reader.readAsDataURL(file);
-        } else {
-            // Si es PDF u otro
-            const icon = file.type === 'application/pdf' ? 'fa-file-pdf text-danger' : 'fa-file text-secondary';
-            col.innerHTML = `
-                <div class="card preview-card-small h-100">
-                    <div class="card-body text-center p-2">
-                        <i class="fas ${icon}" style="font-size: 2.5rem;"></i>
-                        <p class="mb-1 small text-truncate mt-2" style="font-size: 0.75rem;" title="${file.name}">${file.name}</p>
-                        <p class="mb-0 text-muted" style="font-size: 0.7rem;">${size} MB</p>
-                    </div>
-                </div>
-            `;
-        }
-        
-        preview.appendChild(col);
-    }
-}
-</script>
 @endpush

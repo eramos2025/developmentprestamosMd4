@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h4>Nuevo Cliente</h4>
+    <h4>Nuevo Inversionista</h4>
 @stop
 
 @section('content')
@@ -9,10 +9,10 @@
     <div class="col-md-10 offset-md-1">
         <div class="card card-outline card-primary">
             <div class="card-header">
-                <h3 class="card-title">Ingrese nuevo cliente</h3>
+                <h3 class="card-title">Ingrese nuevo Inversionista</h3>
             </div>
 
-            <form action="{{ url('admin/clientes/create') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('admin/inversionistas/create') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="card-body">
@@ -23,6 +23,13 @@
                                 <i class="fas fa-users-cog"></i> Datos Generales
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-financiera-tab" data-toggle="tab" href="#tab-financiera" role="tab" aria-controls="tab-financiera" aria-selected="false">
+                                <i class="fas fa-credit-card"></i> Información Financiera
+                            </a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" id="tab-archivos-tab" data-toggle="tab" href="#tab-archivos" role="tab" aria-controls="tab-archivos" aria-selected="false">
                                 <i class="fas fa-cloud-upload-alt"></i> Archivos Relacionados
@@ -87,21 +94,28 @@
 {{-- Teléfono y Teléfono de Referencia (2 columnas) --}}
 <div class="row">
 
-    {{-- Correo electrónico --}}
+    {{-- Estado Civil --}}
     <div class="col-md-4">
                     <div class="form-group">
-                        <label for="email">Correo Electrónico</label><b> (*)</b>
+                        <label for="estado_civil">Estado Civil</label><b> (*)</b>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <span class="input-group-text"><i class="fas fa-place-of-worship"></i>
                             </div>
-                            <input type="email" id="email" name="email" class="form-control" placeholder="Introduce tu correo">                                    
+                <select name="estado_civil" id="estado_civil" class="form-control">
+                    <option value="">Seleccione...</option>
+                    <option value="S">Soltero</option> 
+                    <option value="C">Casado</option>
+                    <option value="V">Viudo</option>
+                    <option value="D">Divorciado</option>
+                    <option value="E">Separado</option>
+                    <option value="U">Unión de hecho</option>
+                </select>
                         </div> 
-                        @error('email')
+                        @error('estado_civil')
                             <small style="color:red"> {{ $message }} </small>
                         @enderror                               
                     </div>
-
     </div>    
 
     {{-- Teléfono --}}
@@ -140,6 +154,19 @@
 
 </div>
 
+                    {{-- Correo electrónico --}}
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label><b> (*)</b>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Ingresa tu correo">                                    
+                        </div> 
+                        @error('email')
+                            <small style="color:red"> {{ $message }} </small>
+                        @enderror                               
+                    </div>
 
             {{-- Dirección --}}
         <div class="form-group">
@@ -212,35 +239,38 @@
 
 {{-- Ocupación e Ingreso Mensual (2 columnas) --}}
 <div class="row">
-    {{-- Ocupación --}}
+
+
+    {{-- Número de Cuenta Principal --}}
     <div class="col-md-6">
         <div class="form-group">
-            <label for="ocupacion">Ocupación</label><b> (*)</b>
+            <label for="nro_cuenta_principal">Número de Cuenta Principal</label><b> (*)</b>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="far fa-id-badge"></i></span>
+                    <span class="input-group-text"><i class="fas fa-file-invoice-dollar"></i></span>
                 </div>
-                <input type="text" id="ocupacion" name="ocupacion" class="form-control"
-                       placeholder="Ingresa tu Ocupación" >
+                <input type="text" id="nro_cuenta_principal" name="nro_cuenta_principal" class="form-control"
+                       placeholder="Ingresa tu Número de Cuenta Principal" >
             </div>
-            @error('ocupacion')
+            @error('nro_cuenta_principal')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
-    </div>
+    </div>    
+
 
     {{-- Ingreso Mensual --}}
     <div class="col-md-6">
         <div class="form-group">
-            <label for="ing_mensual">Ingreso Mensual</label><b> (*)</b>
+            <label for="monto_inversion">Monto Aproximado de Inversión</label><b> (*)</b>
             <div class="input-group mb-3">
-                <input type="text" id="ing_mensual" name="ing_mensual" class="form-control"
-                placeholder="Ingresa tu Ingreso Mensual" >
+                <input type="text" id="monto_inversion" name="monto_inversion" class="form-control"
+                placeholder="Ingresa un Monto Aproximado de Inversión" >
                 <div class="input-group-append">
                     <span class="input-group-text">.00</span>
                 </div>
             </div>
-            @error('ing_mensual')
+            @error('monto_inversion')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
@@ -263,6 +293,43 @@
                             <small style="color:red"> {{ $message }} </small>
                         @enderror
                     </div>
+
+                        </div>
+
+                        {{-- ===== TAB 3: INFORMACIÓN FINANCIERA ===== --}}
+                        <div class="tab-pane fade" id="tab-financiera" role="tabpanel" aria-labelledby="tab-financiera-tab">
+
+    {{-- Contador (se genera automáticamente con JS) --}}    
+    {{-- Contenedor de Cuentas Adicionales --}}
+    <div id="cuentas-container">
+        <div class="form-group cuenta-item">
+            <label>Cuenta Adicional #1</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-file-invoice-dollar"></i></span>
+                </div>
+                <input type="text" 
+                       name="nro_cuenta[]" 
+                       class="form-control @error('nro_cuenta.0') is-invalid @enderror"
+                       placeholder="Ej: 1234567890123456"
+                       maxlength="20"
+                       value="{{ old('nro_cuenta.0') }}"
+                       oninput="this.value = this.value.replace(/\D/g, '')">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-danger" onclick="eliminarCuenta(this)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            @error('nro_cuenta.0')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-sm" onclick="agregarCuenta()">
+        <i class="fas fa-plus"></i> Agregar cuenta adicional
+    </button>
 
                         </div>
 
@@ -298,7 +365,7 @@
 
                 <div class="card-footer text-center">
                     <button type="submit" class="btn btn-primary">Enviar</button>
-                    <a href="{{ url('/admin/clientes') }}" class="btn btn-secondary">Cancelar</a>
+                    <a href="{{ url('/admin/inversionistas') }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -321,6 +388,102 @@
 
 @push('js')
 <script>
+
+/* ============================================================
+   GESTIÓN SIMPLIFICADA DE CUENTAS ADICIONALES - LARAVEL 11
+   ============================================================ */
+
+let contadorCuentas = 1;
+
+// Crear nuevo campo de cuenta
+function crearCampoCuenta() {
+    contadorCuentas++;
+    const div = document.createElement('div');
+    div.classList.add('form-group', 'cuenta-item');
+    
+    div.innerHTML = `
+        <label>Cuenta Adicional #${contadorCuentas}</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-file-invoice-dollar"></i></span>
+            </div>
+            <input type="text" 
+                   name="nro_cuenta[]" 
+                   class="form-control"
+                   placeholder="Ej: 1234567890123456"
+                   maxlength="20"
+                   oninput="this.value = this.value.replace(/\\D/g, '')">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-danger" onclick="eliminarCuenta(this)">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    `;
+    
+    return div;
+}
+
+// Agregar nueva cuenta
+function agregarCuenta() {
+    const contenedor = document.getElementById('cuentas-container');
+    const total = contenedor.querySelectorAll('.cuenta-item').length;
+    
+    if (total >= 10) {
+        alert('Máximo 10 cuentas adicionales permitidas');
+        return;
+    }
+    
+    contenedor.appendChild(crearCampoCuenta());
+}
+
+// Eliminar cuenta
+function eliminarCuenta(boton) {
+    const item = boton.closest('.cuenta-item');
+    if (item) {
+        item.remove();
+        renumerarCuentas();
+    }
+}
+
+// Renumerar etiquetas
+function renumerarCuentas() {
+    const cuentas = document.querySelectorAll('.cuenta-item');
+    cuentas.forEach((cuenta, index) => {
+        const label = cuenta.querySelector('label');
+        if (label) {
+            label.textContent = `Cuenta Adicional #${index + 2}`;
+        }
+    });
+    contadorCuentas = cuentas.length + 1;
+}
+
+// Limpiar campos vacíos antes de enviar
+function limpiarCamposVacios() {
+    const inputs = document.querySelectorAll('input[name="nro_cuenta[]"]');
+    inputs.forEach(input => {
+        if (input.value.trim() === '') {
+            const item = input.closest('.cuenta-item');
+            if (item) item.remove();
+        }
+    });
+}
+
+// Inicializar
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function() {
+            limpiarCamposVacios();
+        });
+    }
+});
+
+
+/* ============================================================
+   FUNCIONES PARA MANEJAR CARGA DE ARCHIVOS
+   ============================================================ */
+
 function mostrarArchivosConPreview(input) {
     const preview = document.getElementById('preview-archivos');
     const files = input.files;

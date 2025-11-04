@@ -70,7 +70,7 @@ Route::delete('/admin/roles/{id}',
 // RUTAS MODULO :: Usuarios ::
 Route::get('/admin/usuarios', 
            [App\Http\Controllers\UsuarioController::class, 'index'])->name('admin.usuarios.index')->middleware('auth');
-// CRUD Configuraciones
+// CRUD Configuraciones Usuarios
 // Crear
 Route::get('/admin/usuarios/create', 
            [App\Http\Controllers\UsuarioController::class, 'create'])->name('admin.usuarios.create')->middleware('auth');
@@ -92,7 +92,7 @@ Route::delete('/admin/usuarios/{id}',
 // RUTAS MODULO :: Clientes ::
 Route::get('/admin/clientes', 
            [App\Http\Controllers\ClienteController::class, 'index'])->name('admin.clientes.index')->middleware('auth');
-// CRUD Configuraciones
+// CRUD Configuraciones Clientes
 // Crear
 Route::get('/admin/clientes/create', 
            [App\Http\Controllers\ClienteController::class, 'create'])->name('admin.clientes.create')->middleware('auth');
@@ -110,5 +110,32 @@ Route::put('/admin/clientes/{id}',
 Route::delete('/admin/clientes/{id}', 
            [App\Http\Controllers\ClienteController::class, 'destroy'])->name('admin.clientes.destroy')->middleware('auth');
 
+// Ruta para eliminar archivo individual
+Route::delete('/admin/clientes/archivos/{id}', [App\Http\Controllers\ClienteController::class, 'deleteArchivo'])
+    ->name('clientes.archivo.delete')->middleware('auth');
 
+//Prueba: solo para mostrar la version original xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Route::get('/admin/clientes/old/create', 
+           [App\Http\Controllers\ClienteController::class, 'prueba'])->name('admin.clientes.old.prueba')->middleware('auth');
 
+//=========================================================================================
+// RUTAS MODULO :: Inversionista ::
+Route::get('/admin/inversionistas', 
+           [App\Http\Controllers\InversionistaController::class, 'index'])->name('admin.inversionistas.index')->middleware('auth');
+// CRUD Configuraciones Inversionista
+// Crear
+Route::get('/admin/inversionistas/create', 
+           [App\Http\Controllers\InversionistaController::class, 'create'])->name('admin.inversionistas.create')->middleware('auth');
+Route::post('/admin/inversionistas/create', 
+           [App\Http\Controllers\InversionistaController::class, 'store'])->name('admin.inversionistas.store')->middleware('auth');
+// Leer
+Route::get('/admin/inversionistas/{id}', 
+           [App\Http\Controllers\InversionistaController::class, 'show'])->name('admin.inversionistas.show')->middleware('auth');
+// Actualiza
+Route::get('/admin/inversionistas/{id}/edit', 
+           [App\Http\Controllers\InversionistaController::class, 'edit'])->name('admin.inversionistas.edit')->middleware('auth');
+Route::put('/admin/inversionistas/{id}', 
+           [App\Http\Controllers\InversionistaController::class, 'update'])->name('admin.inversionistas.update')->middleware('auth');
+// Eliminar
+Route::delete('/admin/inversionistas/{id}', 
+           [App\Http\Controllers\InversionistaController::class, 'destroy'])->name('admin.inversionistas.destroy')->middleware('auth');

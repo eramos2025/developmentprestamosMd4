@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h4>Nuevo Cliente</h4>
+    <h4>Nuevo Inversionista</h4>
 @stop
 
 @section('content')
@@ -9,7 +9,7 @@
     <div class="col-md-10 offset-md-1">
         <div class="card card-outline card-primary">
             <div class="card-header">
-                <h3 class="card-title">Ingrese nuevo cliente</h3>
+                <h3 class="card-title">Ingrese nuevo inversionista</h3>
             </div>
 
             <form action="{{ url('admin/clientes/create') }}" method="POST" enctype="multipart/form-data">
@@ -140,6 +140,19 @@
 
 </div>
 
+                    {{-- Número de Cuenta --}}
+                    <div class="form-group">
+                        <label for="direccion">Número de Cuenta</label><b> (*)</b>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-file-invoice-dollar"></i></span>
+                            </div>
+                            <input type="text" id="direccion" name="nro_cuenta" class="form-control" placeholder="Ingresa tu Número de Cuenta">
+                        </div>
+                        @error('nro_cuenta')
+                            <small style="color:red"> {{ $message }} </small>
+                        @enderror
+                    </div>
 
             {{-- Dirección --}}
         <div class="form-group">
@@ -210,45 +223,6 @@
 
     </div>
 
-{{-- Ocupación e Ingreso Mensual (2 columnas) --}}
-<div class="row">
-    {{-- Ocupación --}}
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="ocupacion">Ocupación</label><b> (*)</b>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="far fa-id-badge"></i></span>
-                </div>
-                <input type="text" id="ocupacion" name="ocupacion" class="form-control"
-                       placeholder="Ingresa tu Ocupación" >
-            </div>
-            @error('ocupacion')
-                <small class="text-danger">{{ $message }}</small>
-            @enderror
-        </div>
-    </div>
-
-    {{-- Ingreso Mensual --}}
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="ing_mensual">Ingreso Mensual</label><b> (*)</b>
-            <div class="input-group mb-3">
-                <input type="text" id="ing_mensual" name="ing_mensual" class="form-control"
-                placeholder="Ingresa tu Ingreso Mensual" >
-                <div class="input-group-append">
-                    <span class="input-group-text">.00</span>
-                </div>
-            </div>
-            @error('ing_mensual')
-                <small class="text-danger">{{ $message }}</small>
-            @enderror
-        </div>
-    </div>
-
-
-</div>
-
                     {{-- Comentarios --}}
                     <div class="form-group">
                         <label for="direccion">Comentarios</label><b> (*)</b>
@@ -269,27 +243,14 @@
                         {{-- ===== TAB 2: ARCHIVOS RELACIONADOS ===== --}}
                         <div class="tab-pane fade" id="tab-archivos" role="tabpanel" aria-labelledby="tab-archivos-tab">
                             <div class="form-group">
-                                <label for="archivos">Archivos Relacionados</label>
-                                
-                                {{-- Botón personalizado para subir --}}
-                                <div class="text-center p-4 border rounded" 
-                                    style="background: #f8f9fa; cursor: pointer;"
-                                    onclick="document.getElementById('archivos').click()">
-                                    <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-2"></i>
-                                    <p class="mb-0">Haz clic aquí para seleccionar archivos</p>
-                                    <small class="text-muted">JPG, PNG, PDF (máx. 5MB cada uno)</small>
+                                <label for="logo">Archivos Relacionados</label>
+                                <input type="file" name="logo" id="logo" accept=".jpg, .jpeg, .png" class="form-control">
+                                @error('logo')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                                <div class="mt-3 text-center">
+                                    <output id="preview"></output>
                                 </div>
-                                
-                                <input type="file" 
-                                    class="d-none" 
-                                    id="archivos" 
-                                    name="archivos[]" 
-                                    multiple
-                                    accept=".jpg,.jpeg,.png,.pdf"
-                                    onchange="mostrarArchivosConPreview(this)">
-                                
-                                {{-- Preview de archivos --}}
-                                <div id="preview-archivos" class="row mt-3"></div>
                             </div>
                         </div>
 
@@ -308,68 +269,7 @@
 
 
 @push('css')
-<style>
-.card {
-    transition: transform 0.2s;
-}
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-</style>
 @endpush
 
 @push('js')
-<script>
-function mostrarArchivosConPreview(input) {
-    const preview = document.getElementById('preview-archivos');
-    const files = input.files;
-    
-    if (files.length === 0) {
-        preview.innerHTML = '';
-        return;
-    }
-    
-    preview.innerHTML = '';
-    
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const size = (file.size / 1024 / 1024).toFixed(2);
-        
-        const col = document.createElement('div');
-        col.className = 'col-md-2 col-sm-4 col-6 mb-3'; // Más columnas = más pequeño
-        
-        // Si es imagen, mostrar preview
-        if (file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                col.innerHTML = `
-                    <div class="card preview-card-small h-100">
-                        <img src="${e.target.result}" class="card-img-top" style="height: 100px; object-fit: cover;">
-                        <div class="card-body p-2">
-                            <p class="mb-1 small text-truncate" style="font-size: 0.75rem;" title="${file.name}">${file.name}</p>
-                            <p class="mb-0 text-muted" style="font-size: 0.7rem;">${size} MB</p>
-                        </div>
-                    </div>
-                `;
-            };
-            reader.readAsDataURL(file);
-        } else {
-            // Si es PDF u otro
-            const icon = file.type === 'application/pdf' ? 'fa-file-pdf text-danger' : 'fa-file text-secondary';
-            col.innerHTML = `
-                <div class="card preview-card-small h-100">
-                    <div class="card-body text-center p-2">
-                        <i class="fas ${icon}" style="font-size: 2.5rem;"></i>
-                        <p class="mb-1 small text-truncate mt-2" style="font-size: 0.75rem;" title="${file.name}">${file.name}</p>
-                        <p class="mb-0 text-muted" style="font-size: 0.7rem;">${size} MB</p>
-                    </div>
-                </div>
-            `;
-        }
-        
-        preview.appendChild(col);
-    }
-}
-</script>
 @endpush

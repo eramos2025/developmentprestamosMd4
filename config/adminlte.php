@@ -372,11 +372,21 @@ return [
         ],
         [
             'text' => 'Clientes',
-            'icon' => 'fas fa-fw fa-id-card',
+            'icon' => 'fas fa-handshake',
             'submenu' => [
                 [
                     'text' => 'Listado de clientes',
                     'url' => 'admin/clientes',
+                ],
+            ],    
+        ],
+        [
+            'text' => 'Inversionistas',
+            'icon' => 'fas fa-user-tie',
+            'submenu' => [
+                [
+                    'text' => 'Listado de Invesrionistas',
+                    'url' => 'admin/inversionistas',
                 ],
             ],    
         ],
